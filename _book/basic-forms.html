@@ -1,0 +1,455 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Core RuleScript expressions · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="other-concepts.html" />
+    
+    
+    <link rel="prev" href="specs-and-inputs.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="rationale.html">
+            
+                <a href="rationale.html">
+            
+                    
+                    Why RuleScript?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="status.html">
+            
+                <a href="status.html">
+            
+                    
+                    Project Status
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="writing-rulescript.html">
+            
+                <a href="writing-rulescript.html">
+            
+                    
+                    Writing RuleScript
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="specs-and-inputs.html">
+            
+                <a href="specs-and-inputs.html">
+            
+                    
+                    Specs and Inputs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.3" data-path="basic-forms.html">
+            
+                <a href="basic-forms.html">
+            
+                    
+                    Core RuleScript expressions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="other-concepts.html">
+            
+                <a href="other-concepts.html">
+            
+                    
+                    Other RulesScript concepts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="beyond-rulescript.html">
+            
+                <a href="beyond-rulescript.html">
+            
+                    
+                    Beyond this documentation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Core RuleScript expressions</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="core-rulescript-expressions">Core RuleScript expressions</h1>
+<p>RuleScript expects you to structure your specs around a small number of basic expressions, described below.</p>
+<h2 id="validate-document"><code>validate-document</code></h2>
+<p>All RuleScript files start with the validate-document command, which specifies the name to be used for the input file and the rules to be checked. The signature is:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">validate-document</span>
+  (<span class="hljs-name">input-name</span>)
+  ...rules
+)
+</code></pre>
+<p>Note that input-name is enclosed within parentheses. The name <code>input-name</code> is just an example; you can (and should!) use a name that illustrates the thing you are validating. Just to be clear, what you are doing in the input-name expression is giving a name to the input document being combined with this spec, so that you can refer to it in subsequent parts of the spec.</p>
+<h2 id="rule"><code>rule</code></h2>
+<p>Rules are the heart of a RuleScript spec. Each one is a specific yes/no question you are asking about the input data.</p>
+<p>Rule are defined in the following way:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">rule</span>
+  rule-name
+  (<span class="hljs-name">single-rule-expression</span> ...))
+</code></pre>
+<p>The <code>rule</code> expression must be followed by the rule&#x2019;s name. Make this name descriptive; it&#x2019;s how you&#x2019;re going to find the rule later. In accordance with RuleScript syntax rules, the rule&#x2019;s name must only be one symbol (i.e. <em>NOT</em> a between quotation marks). If you want a multiword rule, separate the &quot;words&quot; with a dash character. So, for a carnival ride, &quot;Applicant Is Tall Enough&quot; would become <code>applicant-is-tall-enough</code>. Later, your results will be printed with proper spaces between the words and each word capitalized in the rule name.</p>
+<p>Note: <code>single-rule-expression</code> means that each rule must have exactly one (1) expression following the rule name, which ultimately evaluates to <code>true</code> or <code>false</code>. Of course, your rule expression is likely to contain sub-expressions; this is fine, as long as there is only one top-level expression. For example, the following is fine:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">rule</span>
+  not-an-error
+  (<span class="hljs-name"><span class="hljs-builtin-name">and</span></span>
+    (<span class="hljs-name">check-first-condition</span> ...)
+    (<span class="hljs-name">check-second-condition</span> ...)))
+</code></pre>
+<p>... but a rule expression containing more than one expression, like the following, is not:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">rule</span>
+  compiler-is-unhappy
+  (<span class="hljs-name">do-first-thing</span> ...)
+  (<span class="hljs-name">do-second-thing</span> ...))
+</code></pre>
+<h2 id="in"><code>in</code></h2>
+<p><code>in</code> allows you to link input data to the logic in your spec. Except for <code>rule</code>, which is required to structure specs, <code>in</code> will be your most frequently-used RuleScript expression. <code>in</code> searches for data within a source, using a special verb to tell the computer how to look for the terms you provide. It follows this template:</p>
+<pre><code>(in &lt;subject&gt; &lt;verb&gt; &lt;object(s)&gt;)
+</code></pre><ul>
+<li><code>subject</code> is the thing you want to look inside. This is usually just the <code>input</code> to your spec, but it can also be the result of an <code>in</code> expression (more on this later).</li>
+<li><code>verb</code> is one of <code>find</code>, <code>find-each</code>, or <code>extract</code>. They are explained below.</li>
+<li><code>objects</code> are the JSON fields/keys/properties to search for within <code>subject</code>. You must provide at least one <code>object</code> to <code>in</code>.</li>
+</ul>
+<p>If <code>in</code> can&apos;t find the data you specify, it will return <code>nil</code>.</p>
+<p>This is a long section with lots of intimidating notation. If that&apos;s too much for you right now, just stick with basic useage of <code>in</code>. It will cover 90% of your use-cases.</p>
+<p>Let&apos;s look at the different forms of <code>in</code> using a simple example. Consider the following JSON object representing a home for sale:</p>
+<pre><code class="lang-json">{
+    <span class="hljs-string">&quot;realtor&quot;</span>: <span class="hljs-string">&quot;Dinn Blynn&quot;</span>,
+    <span class="hljs-string">&quot;address&quot;</span>: <span class="hljs-string">&quot;403 Cook St&quot;</span>,
+    <span class="hljs-string">&quot;city&quot;</span>: <span class="hljs-string">&quot;Victoria&quot;</span>,
+    <span class="hljs-string">&quot;still-available?&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-string">&quot;features&quot;</span>: {
+        <span class="hljs-string">&quot;second-suite&quot;</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-string">&quot;above-ground-pool&quot;</span>: <span class="hljs-literal">false</span>,
+    }
+}
+</code></pre>
+<h3 id="verb-find">Verb: <code>find</code></h3>
+<p>How do we access specific parts of this object in RuleScript? Simple: use <code>in</code>. To retrieve the <code>city</code> field from the home object (defined in our spec as <code>home</code>), we would say:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">in</span> home find city) <span class="hljs-comment">;; evaluates to &quot;Victoria&quot;</span>
+</code></pre>
+<p><code>find</code> looks for the named field/key/property in its <code>subject</code>. It also supports multiple fields, &quot;walking&quot; downward through the data structure:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">in</span> home find features above-ground-pool) <span class="hljs-comment">;; evaluates to false :(</span>
+</code></pre>
+<p><em>Clojure pros</em>: the expression <code>(in data find foo bar)</code> is equivalent to <code>(get-in data [:foo :bar])</code>.</p>
+<h3 id="verb-find-each">Verb: <code>find-each</code></h3>
+<p>While calling <code>find</code> with multiple <code>objects</code> will drill down on your data, <code>find-each</code> treats multiple <code>objects</code> as things that <em>should all be returned</em>. You will get a sequence: useful if you want to check that they all exist, call <code>(in _ extract _ _)</code> on them, use them in a <code>map</code> call, etc.</p>
+<p>Using our <code>home</code> example:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">in</span> home find-each realtor address) <span class="hljs-comment">;; returns &apos;(&quot;Dinn Blynn&quot;, &quot;403 Cook St&quot;)</span>
+</code></pre>
+<p><code>object</code>s in <code>find-each</code> can themselves be sequences, allowing you to be more specific about what should be in your sequence:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">in</span> home find-each (<span class="hljs-name">features</span> second-suite) still-available) <span class="hljs-comment">;; returns `(true, true)</span>
+</code></pre>
+<p><em>Clojure pros</em>: the expression <code>(in data find-each (foo bar) baz)</code> is equivalent to <code>(map #(get-in data %) &apos;([:foo :bar] [:baz]))</code>.</p>
+<h3 id="verb-extract">Verb: <code>extract</code></h3>
+<p><code>extract</code> is the mirror of <code>find-each</code>: Instead of making a sequence by searching for multiple <code>object</code>s in the same <code>subject</code>, you make a sequence by searching for the same <code>object</code> to multiple <code>subject</code>s. This means the <code>subject</code> part of <code>in</code> must be a sequence.</p>
+<p>It&apos;s actually pretty simple. Let&apos;s call the following data `academic-record&apos; (note that it&apos;s a JSON array, which is a sequence of things):</p>
+<pre><code class="lang-json">[
+    { 
+        <span class="hljs-string">&quot;course-name&quot;</span>: <span class="hljs-string">&quot;Math 201&quot;</span>,
+        <span class="hljs-string">&quot;professor&quot;</span>: <span class="hljs-string">&quot;Alonzo Church&quot;</span>,
+        <span class="hljs-string">&quot;grades&quot;</span>: {
+            <span class="hljs-string">&quot;final&quot;</span>: <span class="hljs-number">92</span>,
+            <span class="hljs-string">&quot;midterm&quot;</span>: <span class="hljs-number">87</span>
+        }
+    }, 
+    {
+        <span class="hljs-string">&quot;course-name&quot;</span>: <span class="hljs-string">&quot;Public Speaking&quot;</span>,
+        <span class="hljs-string">&quot;professor&quot;</span>: <span class="hljs-string">&quot;Simon Peyton Jones&quot;</span>,
+        <span class="hljs-string">&quot;grades&quot;</span>: {
+            <span class="hljs-string">&quot;final&quot;</span>: <span class="hljs-number">80</span>,
+            <span class="hljs-string">&quot;midterm&quot;</span>: <span class="hljs-number">79</span> 
+        }
+    },
+    {
+        <span class="hljs-string">&quot;course-name&quot;</span>: <span class="hljs-string">&quot;Software Design&quot;</span>,
+        <span class="hljs-string">&quot;professor&quot;</span>: <span class="hljs-string">&quot;Richard Hickey&quot;</span>,
+        <span class="hljs-string">&quot;grades&quot;</span>: {
+            <span class="hljs-string">&quot;final&quot;</span>: <span class="hljs-number">96</span>,
+            <span class="hljs-string">&quot;midterm&quot;</span>: <span class="hljs-number">78</span>,
+            <span class="hljs-string">&quot;hammock lab&quot;</span>: <span class="hljs-number">99</span>
+        }
+    },
+]
+</code></pre>
+<p>... And to get our final grades, we would call:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">in</span> academic-record extract grades final) <span class="hljs-comment">;; evaluates to &apos;(92, 80, 96)</span>
+</code></pre>
+<p>&quot;But wait,&quot; you say. &quot;The data in my <code>input</code> is a JSON object, not a JSON array!&quot; </p>
+<p>Correct (although an array would also be a valid <code>input</code>). But consider the possibility of using <code>extract</code> alongside sequences <em>within</em> your input returned by <code>find</code>, or created with <code>find-each</code>. Suddenly <code>extract</code> is a nice, compact notation for talking about that data.</p>
+<p><em>Clojure pros</em>: the expression <code>(in data extract foo bar)</code> is equivalent to <code>(map #(get-in % [:foo :bar]) data)</code>.</p>
+<h3 id="nesting-in-expressions">Nesting <code>in</code> expressions</h3>
+<p><code>in</code> merely expects its <code>subject</code> to be something that can be searched. This can be your <code>input</code> data, or <em>a JSON object returned from another <code>in</code> call</em>. So, returning to our <code>house</code> example, the following is totally valid:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">in</span> (<span class="hljs-name">in</span> house find features)
+    find second-suite)          <span class="hljs-comment">;; evaluates to true</span>
+</code></pre>
+<p>&quot;Don&apos;t do this&quot; goes without saying. Only nest <code>in</code> expressions when it will actually increase clarity. For example, instead of:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">in</span> home find-each (<span class="hljs-name">features</span> second-suite)
+                   (<span class="hljs-name">features</span> above-ground-pool))    <span class="hljs-comment">;; evaluates to &apos;(true, false)</span>
+</code></pre>
+<p>Try:</p>
+<pre><code class="lang-clojure">(<span class="hljs-name">in</span> (<span class="hljs-name">in</span> home find features)
+    find-each 
+        second-suite 
+        above-ground-pool) <span class="hljs-comment">;; evaluates to &apos;(true, false)</span>
+</code></pre>
+<h3 id="finally">finally...</h3>
+<p>A hint for RuleScript beginners: don&apos;t get fancy with <code>in</code>. You can do lots of tricks to nest <code>in</code> expressions together in different forms, but increased complexity means increased difficulty for human readers. Use good taste: break your logic into different rules if you notice your <code>in</code>s getting out of hand.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="specs-and-inputs.html" class="navigation navigation-prev " aria-label="Previous page: Specs and Inputs">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="other-concepts.html" class="navigation navigation-next " aria-label="Next page: Other RulesScript concepts">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Core RuleScript expressions","level":"2.3","depth":1,"next":{"title":"Other RulesScript concepts","level":"2.4","depth":1,"path":"other-concepts.md","ref":"other-concepts.md","articles":[]},"previous":{"title":"Specs and Inputs","level":"2.2","depth":1,"path":"specs-and-inputs.md","ref":"specs-and-inputs.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"basic-forms.md","mtime":"2018-03-13T19:48:50.267Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T20:12:25.003Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
